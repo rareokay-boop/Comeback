@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0F131C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Comeback 84</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F131C;--panel:#181E2B;--line:#2A3345;--dock:#F0A02A;--scan:#6FD9E0;--paper:#E9E7E1;--muted:#8A93A8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--paper);font-family:'Barlow',system-ui,sans-serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto;padding:26px 20px 60px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.04em}
+.muted{color:var(--muted)}.scan{color:var(--scan)}.small{font-size:12.5px;line-height:1.6}
+section{margin-top:34px}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(36px,8.5vw,58px);line-height:.95;text-transform:uppercase;margin:10px 0 8px}
+h2.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:500;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2.flat{border:0;padding:0;margin-bottom:6px}
+h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;text-transform:uppercase;margin:5px 0;font-weight:600}
+p{margin:0 0 10px;line-height:1.65}
+.label{border:1px solid var(--line);background:var(--panel);padding:15px 18px 13px;position:relative}
+.label:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--dock)}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:11px;text-transform:uppercase;color:var(--muted);border-bottom:1px dashed var(--line);padding-bottom:9px}
+.row.foot{border-bottom:0;border-top:1px dashed var(--line);padding:9px 0 0;margin-top:11px}
+.thesis{opacity:.85;max-width:52ch}
+.belt{display:grid;grid-template-columns:repeat(14,1fr);gap:5px;margin:18px 0 12px}
+.tick{position:relative;height:20px;border:1px solid var(--line);border-radius:1px}
+.tick.on{background:var(--dock);border-color:var(--dock)}
+.tick.miss{border-style:dotted}
+.tick.now{border-color:var(--scan);box-shadow:inset 0 0 0 2px rgba(111,217,224,.35)}
+.tick em{position:absolute;top:-14px;left:0;font-size:8.5px;font-style:normal;color:var(--muted)}
+ol.time{list-style:none;margin:0;padding:0}
+ol.time li{display:flex;gap:14px;padding:9px 0 9px 14px;border-left:2px solid var(--line);font-size:14.5px}
+ol.time li.sleep{border-left-color:var(--scan)}
+ol.time li.mind,ol.time li.body{border-left-color:var(--dock)}
+.clock{flex:0 0 52px;color:var(--muted);font-size:12px;padding-top:2px}
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{background:transparent;border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;padding:10px 14px;cursor:pointer;border-radius:2px}
+.chip.on{background:var(--dock);border-color:var(--dock);color:var(--ink)}
+.chip:focus-visible,.task:focus-visible,.btns button:focus-visible{outline:2px solid var(--scan);outline-offset:2px}
+.floorNote{font-size:13.5px;color:var(--scan);border-left:2px solid var(--scan);padding-left:12px}
+ul.tasks{list-style:none;padding:0;margin:0}
+button.task{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);padding:14px 2px;color:var(--paper);font:inherit;font-size:15px;cursor:pointer}
+.box{flex:0 0 20px;height:20px;border:1px solid var(--muted);display:grid;place-items:center;font-size:13px;margin-top:1px}
+.task.done .box{background:var(--dock);border-color:var(--dock);color:var(--ink)}
+.task.done .txt{color:var(--muted);text-decoration:line-through}
+.txt{flex:1}.min{color:var(--muted);font-size:11px;padding-top:3px}
+.rules{margin-top:16px;border-left:2px solid var(--dock);padding-left:14px}
+.rules p{font-size:14px;opacity:.9}
+.bang{color:var(--dock);margin-right:8px}
+.field{display:block;margin-bottom:14px}
+.field span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+textarea{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--paper);font:inherit;font-size:16px;padding:10px 12px;resize:vertical;border-radius:2px}
+textarea:focus{outline:none;border-color:var(--scan)}
+.counter{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between;border:1px solid var(--line);background:var(--panel);padding:18px}
+.bignum{font-size:54px;line-height:1;color:var(--dock)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btns button{background:var(--dock);border:0;color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:12px 15px;cursor:pointer;border-radius:2px}
+.btns .ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.miles article{border-left:2px solid var(--line);padding:12px 0 12px 16px}
+.miles article:last-child{border-left-color:var(--scan)}
+.mark{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--dock)}
+.miles p{font-size:14.5px;opacity:.85;margin:0}
+.finish ul{margin:0;padding-left:18px}
+.finish li{margin-bottom:8px;line-height:1.6}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;text-transform:uppercase}
+.warn{border:1px solid var(--dock);padding:12px 14px;font-size:13px;margin-top:18px;display:none}
+@media (max-width:520px){.belt{grid-template-columns:repeat(7,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ------------------------------- plan data -------------------------------- */
+var TIMELINE=[
+["5:30a","Clock out. Sunglasses on before you leave the building.","shift"],
+["6:00a","Home. Food, warm shower, no screens. Weed lives here or nowhere.","wind"],
+["7:00a","Lights out. Blackout, fan, phone across the room.","sleep"],
+["3:00p","Up. Same time every day, days off included.","wake"],
+["3:30p","Gym or movement — outside if you can, daylight is doing double duty.","body"],
+["5:00p","Study block. Sharpest you'll be all day.","mind"],
+["6:00p","Her, and the rest of your life.","her"],
+["8:45p","Three-line log. Bag packed, food packed.","log"],
+["9:15p","Leave.","shift"]];
+
+var SLEEP=[
+"Sunglasses on the drive home. Sunrise is the reason you can't fall asleep — it's not in your head.",
+"Room blacked out, fan on, cool. Phone charging across the room, not on the bed.",
+"Lights out by 7:00am, up at 3:00pm. Hold it on days off too — flipping on weekends is what wrecks you.",
+"Last caffeine of the shift by 1:00am.",
+"No 5pm nap. If you're short on sleep, a 20-minute nap around 8pm — set an alarm, don't lie on the bed.",
+"If sleep is still broken after two weeks of this, the amount you're smoking is the next thing to look at."];
+
+var PHASES=[
+{id:1,weeks:"Weeks 1–2",span:[1,14],name:"Load In",
+ thesis:"The only goal is to not miss. Keep it small enough that skipping feels ridiculous.",
+ shift:[["Move 15 min at 3:30 — walk outside, or 3 rounds of pushups + squats",15],
+        ["Study 20 min at 5:00 — one Messer video, 5 lines of notes by hand",20],
+        ["10 min with her at 6:00 — a call, not a text",10],
+        ["Three-line log at 8:45",3]],
+ off:[["Gym 45 min",45],["Study 40 min + write down what you didn't understand",40],
+      ["One planned hour with her, phone in another room",60],["Three-line log",3]],
+ rules:["Weed only in the 6–7am wind-down. That one rule protects your whole afternoon.",
+        "Never two missed days in a row. One is noise. Two is how this ends."]},
+{id:2,weeks:"Weeks 3–4",span:[15,28],name:"Build The Lane",
+ thesis:"Same spine, more weight. You've proven you show up — now make it count for something.",
+ shift:[["Gym 3×/week at 3:30 (full body, 5 lifts). 20 min walk on the other days.",45],
+        ["Study 30 min + one practice quiz, score written down",35],
+        ["10 min of a real book — paper, not a feed",10],
+        ["10 min with her",10],["Three-line log",3]],
+ off:[["Gym 45 min",45],["Study 60 min + practice quiz",60],
+      ["One planned hour with her, phone away",60],["20 min reading",20],["Three-line log",3]],
+ rules:["Weed still only in the wind-down window. If that slips, everything downstream slips.",
+        "Sunday: 10 min review. What worked, what you dodged, one fix for next week."]},
+{id:3,weeks:"Weeks 5–8",span:[29,56],name:"Hands On",
+ thesis:"Reading about IT stops counting. You break things, fix them, and start asking strangers for a job.",
+ shift:[["Gym 4×/week",45],["Study 45 min with your hands — VMs, tear down your rig, subnetting drills",45],
+        ["20 min reading",20],["10 min with her",10],["Three-line log",3]],
+ off:[["Gym 45 min",45],["Study 75 min, hands-on lab",75],
+      ["Apply to 2 IT jobs — help desk, desktop support, local MSP. Underqualified is fine.",30],
+      ["Real time with her, planned in advance",90],["Three-line log",3]],
+ rules:["Two applications a week, every week. Rejection is data, not a verdict.",
+        "Pick two dry days and put them on the calendar before the week starts."]},
+{id:4,weeks:"Weeks 9–12",span:[57,84],name:"Ship It",
+ thesis:"Book the exam before you feel ready. Feeling ready does not arrive on its own.",
+ shift:[["Gym 4–5×/week",45],["60 min timed practice test, or review every question you missed",60],
+        ["20 min reading",20],["10 min with her",10],["Three-line log",3]],
+ off:[["Gym 45 min",45],["90 min exam prep",90],
+      ["5 applications + one mock interview, answers spoken out loud",45],
+      ["Real time with her",90],["Three-line log",3]],
+ rules:["Register for A+ Core 1 in week 9 and pay for it. Sunk cost is a tool — use it on yourself.",
+        "Three dry days a week. Never before a study block."]}];
+
+var FLOOR=[["One 10-minute Messer video. That's it.",10],
+           ["One message to her that isn't a meme",2],
+           ["One line in the log",1]];
+
+var MILESTONES=[
+["Day 21","The reflex loosens","Urges still show up. What changes is that reaching for your phone stops being automatic. Sleep usually improves first, mostly because you're no longer spending an hour on it. Expect one less hook in you, not a personality transplant."],
+["Day 60","Your baseline moves","Attention gets easier to hold, and interest tends to shift back toward the actual person in front of you. The quieter part matters more: you now have two months of proof you can override an urge. That transfers — to a study block, to a fifth set, to not spending money you shouldn't."],
+["Day 180","It stops being a streak","You stop counting, because it's just what you do. The value was never the abstinence. It's that \"I don't do that anymore\" became a true sentence about you, and a person is mostly built out of true sentences like that one."],
+["Straight talk","What won't happen","No testosterone superpowers, no guaranteed confidence spike, no magnetism at day 7. Those claims are marketing, and believing them sets you up to quit when they don't land. Also: a slip doesn't reset you to zero. Three slips in 90 days is still a 97% cut from daily. Note the trigger, keep the checklist."]];
+
+var PROMPTS=[["did","One thing I actually did today"],
+             ["dodged","One thing I dodged, and why"],
+             ["next","Tomorrow's one non-negotiable"]];
+
+/* --------------------------------- state ---------------------------------- */
+var KEY="comeback84";
+var S,MODE="shift",canSave=true;
+
+function today(){var d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);}
+function load(){
+  try{var raw=localStorage.getItem(KEY);S=raw?JSON.parse(raw):null;}catch(e){canSave=false;}
+  if(!S)S={start:today(),checks:{},cleared:{},logs:{},clean:2};
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){canSave=false;render();}}
+function dayNum(){
+  var diff=(new Date(today()+"T00:00:00")-new Date(S.start+"T00:00:00"))/864e5;
+  return Math.min(84,Math.max(1,Math.round(diff)+1));
+}
+function phaseFor(n){for(var i=0;i<PHASES.length;i++){if(n>=PHASES[i].span[0]&&n<=PHASES[i].span[1])return PHASES[i];}return PHASES[3];}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* --------------------------------- render --------------------------------- */
+function render(){
+  var n=dayNum(),p=phaseFor(n),list=MODE==="floor"?FLOOR:p[MODE];
+  var ck=today()+"|"+MODE,checks=S.checks[ck]||[],done=0;
+  for(var i=0;i<checks.length;i++)if(checks[i])done++;
+
+  var h='';
+  h+='<header class="label"><div class="row mono"><span>DAY '+(n<10?"0"+n:n)+' / 84</span>'
+   +'<span>PHASE '+p.id+' · '+p.weeks.toUpperCase()+'</span></div>'
+   +'<h1>'+p.name+'</h1><p class="thesis">'+p.thesis+'</p>'
+   +'<div class="row foot mono"><span>SHIFT 9:45P — 5:30A</span>'
+   +'<span class="scan">'+done+'/'+list.length+' CLEARED</span></div></header>';
+
+  h+='<div class="warn" id="warn">Your browser isn\'t letting this page save. Opening it from a hosted link (not a downloaded file) fixes it.</div>';
+
+  h+='<section><h2 class="eyebrow mono">The belt · 84 days</h2><div class="belt">';
+  for(var k=1;k<=84;k++){
+    var c=S.cleared[k]?"tick on":(k===n?"tick now":(k<n?"tick miss":"tick"));
+    h+='<span class="'+c+'">'+(k%7===1?'<em class="mono">'+Math.ceil(k/7)+'</em>':'')+'</span>';
+  }
+  h+='</div><p class="muted small">Amber is cleared. Dotted is a day you let pass. One is nothing — two in a row is the failure mode.</p></section>';
+
+  h+='<section><h2 class="eyebrow mono">Your day, anchored to the shift</h2><ol class="time">';
+  TIMELINE.forEach(function(r){h+='<li class="'+r[2]+'"><span class="mono clock">'+r[0]+'</span><span>'+r[1]+'</span></li>';});
+  h+='</ol></section>';
+
+  h+='<section><h2 class="eyebrow mono">Sleep comes first — nothing else survives without it</h2><div class="rules">';
+  SLEEP.forEach(function(r){h+='<p><span class="mono bang">→</span>'+r+'</p>';});
+  h+='</div></section>';
+
+  h+='<section><h2 class="eyebrow mono">Today</h2><div class="modes">';
+  [["shift","Shift day"],["off","Day off"],["floor","Floor mode"]].forEach(function(m){
+    h+='<button class="chip'+(MODE===m[0]?" on":"")+'" data-mode="'+m[0]+'">'+m[1]+'</button>';});
+  h+='</div>';
+  if(MODE==="floor")h+='<p class="floorNote">Twelve minutes. It counts as a cleared day. This exists so a bad day never becomes two.</p>';
+  h+='<ul class="tasks">';
+  list.forEach(function(t,i){
+    h+='<li><button class="task'+(checks[i]?" done":"")+'" data-i="'+i+'">'
+     +'<span class="box">'+(checks[i]?"✓":"")+'</span><span class="txt">'+t[0]+'</span>'
+     +'<span class="mono min">'+t[1]+'m</span></button></li>';});
+  h+='</ul>';
+  if(MODE!=="floor"){h+='<div class="rules">';p.rules.forEach(function(r){h+='<p><span class="mono bang">!</span>'+r+'</p>';});h+='</div>';}
+  h+='</section>';
+
+  h+='<section><h2 class="eyebrow mono">Three-line log</h2>';
+  PROMPTS.forEach(function(pr){
+    var v=(S.logs[today()]||{})[pr[0]]||"";
+    h+='<label class="field"><span class="mono">'+pr[1]+'</span>'
+     +'<textarea rows="2" data-log="'+pr[0]+'">'+esc(v)+'</textarea></label>';});
+  h+='</section>';
+
+  h+='<section class="counter"><div><h2 class="eyebrow mono flat">Off the loop</h2>'
+   +'<div class="bignum mono">'+S.clean+'</div><p class="muted small">days</p></div>'
+   +'<div class="btns"><button id="plus">+1 day</button>'
+   +'<button class="ghost" id="reset">Slipped — log it, keep going</button></div></section>';
+
+  h+='<section><h2 class="eyebrow mono">What actually changes, and when</h2><div class="miles">';
+  MILESTONES.forEach(function(m){
+    h+='<article><span class="mono mark">'+m[0]+'</span><h3>'+m[1]+'</h3><p>'+m[2]+'</p></article>';});
+  h+='</div></section>';
+
+  h+='<section class="finish"><h2 class="eyebrow mono">Day 84 — what success means here</h2><ul>'
+   +'<li>CompTIA A+ Core 1 passed, or sat for.</li>'
+   +'<li>20+ real applications out to help desk and support roles.</li>'
+   +'<li>Twelve weeks of gym from a standing start.</li>'
+   +'<li>A sleep schedule that holds, which is the thing everything else was waiting on.</li>'
+   +'<li>84 days of written proof that you follow through. Nobody can take that part.</li></ul></section>';
+
+  h+='<footer class="mono muted small">Started '+S.start+' · Phase '+p.id+' of 4</footer>';
+
+  document.getElementById("app").innerHTML=h;
+  if(!canSave)document.getElementById("warn").style.display="block";
+  wire(n,p,list,ck);
+}
+
+function wire(n,p,list,ck){
+  document.querySelectorAll(".chip").forEach(function(b){
+    b.onclick=function(){MODE=b.getAttribute("data-mode");render();};});
+  document.querySelectorAll(".task").forEach(function(b){
+    b.onclick=function(){
+      var i=+b.getAttribute("data-i"),arr=(S.checks[ck]||[]).slice();
+      arr[i]=!arr[i];S.checks[ck]=arr;
+      var c=0;arr.forEach(function(v){if(v)c++;});
+      S.cleared[n]=c>=list.length;
+      save();render();};});
+  document.querySelectorAll("[data-log]").forEach(function(t){
+    t.oninput=function(){
+      var d=today();S.logs[d]=S.logs[d]||{};
+      S.logs[d][t.getAttribute("data-log")]=t.value;save();};});
+  document.getElementById("plus").onclick=function(){S.clean++;save();render();};
+  document.getElementById("reset").onclick=function(){S.clean=0;save();render();};
+}
+
+load();render();
+</script>
+</body>
+</html>
